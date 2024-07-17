@@ -1,0 +1,50 @@
+# ??????
+spring:
+  application:
+    name: drone-hotspot-backend
+  profiles:
+    active: dev
+  mvc:
+    path match:
+      matching-strategy: path_pattern_parser
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.92.165.121:3306/articles
+    username: root
+    password: 123456
+server:
+  address: 0.0.0.0
+  port: 8101
+  servlet:
+    context-path: /api
+mybatis-plus:
+  typeAliasesPackage: com.xyt.articlespringboot3.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: isDelete # ????????????
+      logic-delete-value: 1 # ?????????? 1?
+      logic-not-delete-value: 0 # ?????????? 0?
+# ????
+
+# ??????
+# springdoc-openapi项目配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.xyt.articlespringboot3.controller
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+
