@@ -48,6 +48,7 @@ public class ArticleController {
      * @return
      */
     @PostMapping("/")
+    @PreAuthorize("hasAnyAuthority('user','admin')")
     public BaseResponse<Long> addArticle(@RequestBody ArticleAddRequest articleAddRequest) {
         ThrowUtils.throwIf(articleAddRequest == null, ErrorCode.PARAMS_ERROR);
         //在此处将实体类和 DTO 进行转换
@@ -73,6 +74,7 @@ public class ArticleController {
      * @return
      */
     @DeleteMapping("/")
+    @PreAuthorize("hasAnyAuthority('user','admin')")
     public BaseResponse<Boolean> deleteArticle(long id) {
         if (id <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -125,6 +127,7 @@ public class ArticleController {
      * @return
      */
     @GetMapping("/")
+    @PreAuthorize("hasAnyAuthority('user','admin')")
     public BaseResponse<ArticleVO> getArticleVOById(long id) {
         ThrowUtils.throwIf(id <= 0, ErrorCode.PARAMS_ERROR);
         // 查询数据库
@@ -158,6 +161,7 @@ public class ArticleController {
      * @return
      */
     @PostMapping("/page/vo")
+    @PreAuthorize("hasAnyAuthority('user','admin')")
     public BaseResponse<Page<ArticleVO>> listArticleVOByPage(@RequestBody ArticleQueryRequest articleQueryRequest) {
         long current = articleQueryRequest.getCurrent();
         long size = articleQueryRequest.getPageSize();
@@ -177,6 +181,7 @@ public class ArticleController {
      * @return
      */
     @PostMapping("/my/page/vo")
+    @PreAuthorize("hasAnyAuthority('user','admin')")
     public BaseResponse<Page<ArticleVO>> listMyArticleVOByPage(@RequestBody ArticleQueryRequest articleQueryRequest) {
         ThrowUtils.throwIf(articleQueryRequest == null, ErrorCode.PARAMS_ERROR);
         // 补充查询条件，只查询当前登录用户的数据
@@ -200,6 +205,7 @@ public class ArticleController {
      * @return
      */
     @PostMapping("/edit")
+    @PreAuthorize("hasAuthority('user')")
     public BaseResponse<Boolean> editArticle(@RequestBody ArticleEditRequest articleEditRequest) {
         if (articleEditRequest == null || articleEditRequest.getPostId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
